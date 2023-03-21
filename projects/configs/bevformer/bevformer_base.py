@@ -39,7 +39,7 @@ queue_length = 4 # each sequence contains `queue_length` frames.
 model = dict(
     type='BEVFormer',
     use_grid_mask=True,
-    video_test_mode=True,
+    video_test_mode=True, # temporal mode
     img_backbone=dict(
         type='ResNet',
         depth=101,
@@ -157,7 +157,8 @@ model = dict(
             cls_cost=dict(type='FocalLossCost', weight=2.0),
             reg_cost=dict(type='BBox3DL1Cost', weight=0.25),
             iou_cost=dict(type='IoUCost', weight=0.0), # Fake cost. This is just to make it compatible with DETR head.
-            pc_range=point_cloud_range))))
+            pc_range=point_cloud_range)))
+)
 
 dataset_type = 'CustomNuScenesDataset'
 data_root = 'data/nuscenes/'

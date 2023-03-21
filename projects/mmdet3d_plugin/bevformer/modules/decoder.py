@@ -276,7 +276,7 @@ class CustomMSDeformableAttention(BaseModule):
              Tensor: forwarded results with shape [num_query, bs, embed_dims].
         """
 
-        if value is None:
+        if value is None: # here value = input bev_embed
             value = query
 
         if identity is None:

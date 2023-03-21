@@ -110,7 +110,7 @@ class BEVFormer(MVXTwoStageDetector):
 
 
     def forward_pts_train(self,
-                          pts_feats,
+                          pts_feats, # or img_feats
                           gt_bboxes_3d,
                           gt_labels_3d,
                           img_metas,
@@ -130,7 +130,7 @@ class BEVFormer(MVXTwoStageDetector):
         Returns:
             dict: Losses of each branch.
         """
-
+        # img_feats = pts_feats
         outs = self.pts_bbox_head(
             pts_feats, img_metas, prev_bev)
         loss_inputs = [gt_bboxes_3d, gt_labels_3d, outs]
@@ -157,7 +157,8 @@ class BEVFormer(MVXTwoStageDetector):
             return self.forward_test(**kwargs)
     
     def obtain_history_bev(self, imgs_queue, img_metas_list):
-        """Obtain history BEV features iteratively. To save GPU memory, gradients are not calculated.
+        """Obtain history BEV features iteratively.
+            To save GPU memory, gradients are not calculated.
         """
         self.eval()
 
@@ -177,6 +178,7 @@ class BEVFormer(MVXTwoStageDetector):
             self.train()
             return prev_bev
 
+    # core interface
     @auto_fp16(apply_to=('img', 'points'))
     def forward_train(self,
                       points=None,
