@@ -16,14 +16,19 @@ from mmcv.runner import (get_dist_info, init_dist, load_checkpoint,
 
 from mmdet3d.apis import single_gpu_test
 from mmdet3d.datasets import build_dataset
-from projects.mmdet3d_plugin.datasets.builder import build_dataloader
 from mmdet3d.models import build_model
 from mmdet.apis import set_random_seed
-from projects.mmdet3d_plugin.bevformer.apis.test import custom_multi_gpu_test
 from mmdet.datasets import replace_ImageToTensor
 import time
 import os.path as osp
 
+import sys
+relative_path = __file__ + "/../projects"
+sys.path.append(relative_path)
+sys.path.append("/home/cairenlan/data_disk/cairenlan/open_source_project/perception/BEVFormer/")
+
+from projects.mmdet3d_plugin.bevformer.apis.test import custom_multi_gpu_test
+from projects.mmdet3d_plugin.datasets.builder import build_dataloader
 
 def parse_args():
     parser = argparse.ArgumentParser(
